@@ -136,7 +136,7 @@ export function Dashboard() {
         </div>
       </main>
       <footer className="text-center p-4 text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Guardian Angel. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} EchoShield. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Guardian Angel',
+  title: 'EchoShield',
   description: 'Your personal safety companion. Activate SOS alerts with a single tap, voice command, or gesture.',
 };
 
