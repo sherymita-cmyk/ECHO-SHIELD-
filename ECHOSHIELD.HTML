@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EchoShield SOS</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #ff4e50, #f9d423);
+      color: white;
+      text-align: center;
+      padding-top: 80px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #whatsappBtn { background-color: #25D366; }
+    #smsBtn { background-color: #007AFF; }
+    #voiceBtn { background-color: #ff3b30; }
+  </style>
+</head>
+<body>
+
+  <h1>🚨 EchoShield SOS</h1>
+  <p>Tap below or say “Help” to trigger alerts</p>
+
+  <button id="whatsappBtn">Send WhatsApp Alert</button>
+  <button id="smsBtn">Send SMS Alert</button>
+  <button id="voiceBtn">Start Voice Detection</button>
+
+  <script>
+    const contacts = [
+      '+917834963300',
+      '+919818386125',
+      '+919718386160',
+      '+919891456235',
+      '+918368944344',
+      '+919667545006',
+      '+917065408492'
+    ];
+
+    let locationLink = 'Location not available';
+
+    // 📍 Get real-time location
+    function fetchLocation(callback) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            locationLink = `https://maps.google.com/?q=${lat},${lon}`;
+            callback();
+          },
+          (error) => {
+            console.error("Location error:", error.message);
+            callback(); // Proceed even if location fails
+          }
+        );
+      } else {
+        console.warn("Geolocation not supported");
+        callback();
+      }
+    }
+
+    function sendWhatsApp() {
+      const message = encodeURIComponent(`🚨 SOS Alert! Please help!\nLocation: ${locationLink}`);
+      contacts.forEach(number => {
+        window.open(`https://wa.me/${number}?text=${message}`, '_blank');
+      });
+    }
+
+    function sendSMS() {
+      contacts.forEach(number => {
+        fetch("https://your-backend-url.com/send-sms", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ to: number, message: `🚨 SOS Alert! Please help!\nLocation: ${locationLink}` })
+        })
+        .then(res => console.log(`SMS sent to ${number}`))
+        .catch(err => console.error(`Failed for ${number}`, err));
+      });
+    }
+
+    document.getElementById("whatsappBtn").onclick = () => {
+      fetchLocation(sendWhatsApp);
+    };
+
+    document.getElementById("smsBtn").onclick = () => {
+      fetchLocation(sendSMS);
+    };
+
+    // 🎙️ Voice Recognition
+    document.getElementById("voiceBtn").onclick = () => {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Voice recognition not supported in this browser.");
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-IN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        console.log("Heard:", transcript);
+        if (transcript.includes("help") || transcript.includes("bachao")) {
+          fetchLocation(() => {
+            sendWhatsApp();
+            sendSMS();
+            alert("🚨 Voice trigger activated!");
+          });
+        }
+      };
+
+      recognition.onerror = (e) => {
+        console.error("Voice error:", e.error);
+      };
+
+      recognition.start();
+      alert("🎙️ Listening for 'help' or 'bachao'...");
+    };
+  </script>
+
+</body>
+</html>
