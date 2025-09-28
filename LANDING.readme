@@ -1,0 +1,145 @@
+"use client";
+
+import React from 'react';
+import Link from 'next/link';
+import { createPageUrl } from '@/utils';
+import { ShieldAlert, MicVocal, Vibrate, MapPin, Video, BatteryWarning, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const FeatureCard = ({ icon: Icon, title, description }: { icon: React.ElementType, title: string, description: string }) => (
+  <motion.div 
+    className="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 backdrop-blur-sm"
+    whileHover={{ scale: 1.03, backgroundColor: 'rgba(41, 51, 73, 0.7)' }}
+    transition={{ duration: 0.2 }}
+  >
+    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-red-600/20 border border-red-500/30 mb-4">
+      <Icon className="h-6 w-6 text-red-400" />
+    </div>
+    <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
+    <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
+  </motion.div>
+);
+
+export default function LandingPage() {
+  return (
+    <div className="w-full min-h-screen bg-slate-900 text-slate-100 font-sans overflow-x-hidden">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-slate-900/60 backdrop-blur-lg border-b border-slate-800">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <img src="https://storage.googleapis.com/space-apps-assets/store_kWixMFcLNK/3M9QB6fUSY-WhatsApp%20Image%202025-09-28%20at%2000.23.37_11fa4a80.jpg" alt="EchoShield Logo" className="h-10 mix-blend-screen" />
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href={createPageUrl('login')} className="text-sm font-medium text-slate-300 hover:text-red-400 transition-colors">
+              Sign In
+            </Link>
+            <Link href={createPageUrl('signup')} className="bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors shadow-lg shadow-red-900/30">
+              Get Started
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="container mx-auto px-6 py-20 md:py-32 text-center relative">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 bg-gradient-radial from-red-900/30 via-slate-900 to-slate-900 rounded-full animate-pulse-slow"></div>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight">
+            Your Voice is Your <span className="text-red-500">Lifeline</span>.
+          </h1>
+          <p className="mt-6 max-w-2xl mx-auto text-lg text-slate-300">
+            EchoShield is the personal safety app that listens for your distress, instantly alerting trusted contacts with your location when you need help most.
+          </p>
+          <div className="mt-10 flex justify-center gap-4">
+            <Link href={createPageUrl('signup')} className="bg-red-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-red-700 transition-transform hover:scale-105 shadow-lg shadow-red-900/50 flex items-center gap-2">
+              Activate EchoShield <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </motion.div>
+      </main>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-slate-900/50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Always on Guard, Always Ready</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-slate-400">
+              Multiple triggers for any situation. Your safety, your choice.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <FeatureCard 
+              icon={ShieldAlert} 
+              title="Instant SOS Button" 
+              description="A single, prominent button to immediately send alerts to all your emergency contacts." 
+            />
+            <FeatureCard 
+              icon={MicVocal} 
+              title="Voice Activation" 
+              description="Trigger an alert hands-free with a secret phrase. Your voice is the key to your safety." 
+            />
+            <FeatureCard 
+              icon={Vibrate} 
+              title="Shake for Help" 
+              description="In situations where you can't speak or tap, a vigorous shake of your phone sends for help." 
+            />
+            <FeatureCard 
+              icon={MapPin} 
+              title="Live Location Sharing" 
+              description="Your alert includes a real-time map link, so your contacts know exactly where you are." 
+            />
+            <FeatureCard 
+              icon={Video} 
+              title="Automatic Recording" 
+              description="After an alert is triggered, the app automatically starts recording audio and video evidence." 
+            />
+            <FeatureCard 
+              icon={BatteryWarning} 
+              title="Low Battery Alerts" 
+              description="Automatically notifies your contacts if your phone battery is critically low, providing your last known location." 
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Get Protected in 3 Simple Steps</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="flex flex-col items-center">
+              <div className="text-5xl font-bold text-red-600/50 mb-4">1</div>
+              <h3 className="text-xl font-semibold text-white mb-2">Add Contacts</h3>
+              <p className="text-slate-400">Quickly add friends and family who you trust to be your emergency contacts.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-5xl font-bold text-red-600/50 mb-4">2</div>
+              <h3 className="text-xl font-semibold text-white mb-2">Set Triggers</h3>
+              <p className="text-slate-400">Enable your preferred alert methods like voice commands or shake detection.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-5xl font-bold text-red-600/50 mb-4">3</div>
+              <h3 className="text-xl font-semibold text-white mb-2">Stay Protected</h3>
+              <p className="text-slate-400">EchoShield runs discreetly, giving you peace of mind wherever you go.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 py-8">
+        <div className="container mx-auto px-6 text-center text-slate-500 text-sm">
+          <p>&copy; {new Date().getFullYear()} EchoShield. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
