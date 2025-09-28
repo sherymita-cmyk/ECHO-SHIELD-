@@ -1,0 +1,29 @@
+{
+  "name": "EmergencyContact",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the emergency contact"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the emergency contact"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number of the emergency contact (for display)"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ],
+  "x-accessControl": {
+    "permissions": {
+      "read": "creator",
+      "write": "creator"
+    }
+  }
+}
