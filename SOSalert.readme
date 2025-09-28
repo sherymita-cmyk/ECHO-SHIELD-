@@ -1,0 +1,50 @@
+{
+  "name": "SOSAlert",
+  "type": "object",
+  "properties": {
+    "triggeredAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the SOS was triggered"
+    },
+    "triggerMethod": {
+      "type": "string",
+      "enum": [
+        "button",
+        "voice",
+        "shake",
+        "low_battery"
+      ],
+      "description": "How the SOS alert was triggered"
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        }
+      },
+      "description": "The user's location when the alert was sent"
+    },
+    "contactsNotified": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of contact emails that were notified"
+    }
+  },
+  "required": [
+    "triggeredAt",
+    "triggerMethod"
+  ],
+  "x-accessControl": {
+    "permissions": {
+      "read": "creator",
+      "write": "creator"
+    }
+  }
+}
